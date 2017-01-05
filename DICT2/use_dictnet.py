@@ -17,12 +17,12 @@ class DictNet():
         # Load model and saved weights
         from keras.models import model_from_json
         if architecture_file is None:
-            self.model = model_from_json(open('char2_architecture.json').read())
+            self.model = model_from_json(open('dict2_architecture.json').read())
         else:
             self.model = model_from_json(open(architecture_file).read())
 
         if weight_file is None:
-            self.model.load_weights('char2_weights.h5')
+            self.model.load_weights('dict2_weights.h5')
         else:
             self.model.load_weights(weight_file)
 
@@ -47,7 +47,7 @@ class DictNet():
         img = self._preprocess(img)
         xtest = zeros((1,1,32,100))
         xtest[0,0,:,:] = img
-        z = model.predict_classes(xtest,verbose=0)[0]
+        z = self.model.predict_classes(xtest,verbose=0)[0]
         return self.output_word[z][0]
 
 
